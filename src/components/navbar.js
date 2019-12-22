@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import logo from '../assets/images/logo4.png'
+import NetworkAnalysis from './networkAnalysis';
 
 var globalSocket = null;
 
@@ -176,7 +177,7 @@ export default class Navbar extends Component {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <button className="ui button bg-white"><Link to='/login'><i aria-hidden="true" className="sign-in icon large"></i>Sign In</Link></button>
+                        <button className="ui button bg-white"><Link to='/login'><i aria-hidden="true" className="sign-in icon md"></i>Sign In</Link></button>
                     </li>
                 </ul>
             </div>
@@ -240,10 +241,14 @@ export default class Navbar extends Component {
                 </div>
                 </div>
 
+                <div class="nav-item my-2">
+                    <NetworkAnalysis/>
+                </div>
+
                 <div class="nav-item dropdown mx-2">
                 <a class="nav-link" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <button onClick={this.goToChat} className="ui button navbar-link-button bg-white">
-                        <i aria-hidden="true" className="mail icon large link-icon"></i>
+                        <i aria-hidden="true" className="mail icon md link-icon"></i>
                         {this.state.newMessages === 0 ? '' : <span class="badge badge-pill badge-danger">{this.state.newMessages}</span>}
                     </button>
                 </a>
@@ -252,7 +257,7 @@ export default class Navbar extends Component {
                 <div class="nav-item dropdown mx-2">
                     <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <button onClick={this.readNotifications} className="ui button navbar-link-button dropdown-item bg-white">
-                            <i aria-hidden="true" className="bell icon large link-icon"></i>
+                            <i aria-hidden="true" className="bell icon md link-icon"></i>
                             {this.state.newNotifications === 0 ? '' : (<span class="badge badge-pill badge-danger">{this.state.newNotifications}</span>)}
                         </button>
                     </a>

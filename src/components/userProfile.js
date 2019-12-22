@@ -11,8 +11,16 @@ import { Dimmer } from 'semantic-ui-react'
 
 export default class Login extends Component {
     constructor(props) {
-      super(props);
-      this.state = {
+        super(props);
+
+        this.feedTab = React.createRef();
+        this.followersTab = React.createRef();
+        this.followingsTab = React.createRef();
+        this.feedTabPanel = React.createRef();
+        this.followersTabPanel = React.createRef();
+        this.followingsTabPanel = React.createRef();
+        
+        this.state = {
         user: null,
         user_posts: null,
         allowToPost: false,
@@ -26,8 +34,8 @@ export default class Login extends Component {
         croppedAvatar: null,
         followings: [],
         followers: [],
-        userAvatar: null
-      }
+        userAvatar: null,
+        }
     }
 
     async UNSAFE_componentWillMount() {
@@ -40,6 +48,16 @@ export default class Login extends Component {
         {
             await this.checkAuth();
             await this.requestPosts();
+            this.followersTab.current.classList.remove('active');
+            this.followingsTab.current.classList.remove('active');
+            this.feedTab.current.classList.add('active')
+
+            this.followersTabPanel.current.classList.remove('active');
+            this.followingsTabPanel.current.classList.remove('active');
+            this.followersTabPanel.current.classList.remove('show');
+            this.followingsTabPanel.current.classList.remove('show');
+            this.feedTabPanel.current.classList.add('active')
+            this.feedTabPanel.current.classList.add('show')
         }
     }
 
@@ -214,6 +232,7 @@ export default class Login extends Component {
                 </div>
             </div>
         )
+
         return (
             <div className='background'>
                 <Navbar userData={this.state.userData} history={this.props.history}/>
@@ -257,21 +276,21 @@ export default class Login extends Component {
                     <div className="col-sm-12 col-lg-6 order-lg-5">
                         <ul class="nav nav-tabs nav-fill" id="profile-tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="feed-tab" data-toggle="tab" href="#nav-feed" role="tab" aria-controls="feed" aria-selected="true">Feed</a>
+                                <a ref={this.feedTab} class="nav-link active" id="feed-tab" data-toggle="tab" href="#nav-feed" role="tab" aria-controls="feed" aria-selected="true">Feed</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="following-tab" data-toggle="tab" href="#nav-following" role="tab" aria-controls="following" aria-selected="false">Following</a>
+                                <a ref={this.followingsTab} class="nav-link" id="following-tab" data-toggle="tab" href="#nav-following" role="tab" aria-controls="following" aria-selected="false">Following</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="followers-tab" data-toggle="tab" href="#nav-followers" role="tab" aria-controls="followers" aria-selected="false">Followers</a>
+                                <a ref={this.followersTab} class="nav-link" id="followers-tab" data-toggle="tab" href="#nav-followers" role="tab" aria-controls="followers" aria-selected="false">Followers</a>
                             </li>
                         </ul>
 
                         <div class="tab-content" id="profile-tabContent">
-                        <div id="nav-feed" class="tab-pane fade show active">
+                        <div ref={this.feedTabPanel} id="nav-feed" class="tab-pane fade show active">
                             <PostList userAvatar = {this.state.userAvatar} posts={this.state.user_posts} allowToPost={this.state.allowToPost} user={this.state.user} requestPosts={this.requestPosts} />
                         </div>
-                        <div id="nav-following" class="tab-pane fade">
+                        <div ref={this.followingsTabPanel} id="nav-following" class="tab-pane fade">
                             <div role="list" className="ui list item">
                                 {this.state.followings.map(fl =>(
                                     <div onClick={() => this.props.history.push("/profile/" + fl.profile_name)} role="listitem" className="item">
@@ -286,7 +305,7 @@ export default class Login extends Component {
                             </div>
                         </div>
 
-                        <div id="nav-followers" class="tab-pane fade">
+                        <div ref={this.followersTabPanel} id="nav-followers" class="tab-pane fade">
                             <div role="list" className="ui list item">
                                 {this.state.followers.map(fl =>(
                                     <div onClick={() => this.props.history.push("/profile/" + fl.profile_name)} role="listitem" className="item">
