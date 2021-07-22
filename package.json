@@ -23,7 +23,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
     "semantic-ui-react": "^0.87.3",
-    "xlsx": "^0.15.3"
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "start": "react-scripts start",
